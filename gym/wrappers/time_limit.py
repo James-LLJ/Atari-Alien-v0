@@ -13,12 +13,12 @@ class TimeLimit(gym.Wrapper):
 
     def step(self, action):
         assert self._elapsed_steps is not None, "Cannot call env.step() before calling reset()"
-        observation, reward, done, info = self.env.step(action)
+        minAlien, minDist, ob, gamescore, reward, done, info = self.env.step(action)
         self._elapsed_steps += 1
         if self._elapsed_steps >= self._max_episode_steps:
             info['TimeLimit.truncated'] = not done
             done = True
-        return observation, reward, done, info
+        return minAlien, minDist, ob, gamescore, reward, done, info
 
     def reset(self, **kwargs):
         self._elapsed_steps = 0
